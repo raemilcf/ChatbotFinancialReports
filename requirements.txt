@@ -1,0 +1,8 @@
+Flask
+numpy
+keras 
+tensorflow 
+nltk 
+inflect
+autocorrect
+Gunicorn
