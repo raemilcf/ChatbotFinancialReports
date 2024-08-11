@@ -3,6 +3,8 @@ import numpy as np
 import json
 import random
 
+import os
+from werkzeug.utils import secure_filename
 
 
 from keras.models import load_model
@@ -150,7 +152,7 @@ from utils import util
 #     return res
 
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request,jsonify
 
 app = Flask(__name__)
 app.static_folder = 'static'
@@ -173,6 +175,20 @@ def get_bot_response():
 
     return userText;
 
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    message = request.form.get('message')
+    file = request.files.get('file')
+    
+    if file:
+        # Process the file here (e.g., save it, read it, etc.)
+        filename = secure_filename(file.filename)
+        file.save(os.path.join('pdfFiles', filename))
+        return jsonify({'response': f'File {filename} uploaded successfully!'})
+    
+    # Process the text message
+    #response = process_user_message(message)
+    return "file uploaded!" #jsonify({'response': response})
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=4900)

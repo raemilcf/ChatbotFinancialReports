@@ -12,18 +12,39 @@ $(function() {
     e.preventDefault();
     //get sms
     var userInput = $("#chat-input").val(); 
-    if(userInput.trim() == ''){
-      return false;
+    var fileInput = $("#file-input")[0].files[0];
+
+    if(userInput.trim() != ''){
+      //add user message to ui 
+      generate_message(PERSON_NAME,PERSON_IMG, 'user' ,userInput );  
+
+      //generate response from bot
+      botResponse(userInput)
+     
     }
-
-    //add user message to ui 
-    generate_message(PERSON_NAME,PERSON_IMG, 'user' ,userInput );  
-
-    //generate response from bot
-    botResponse(userInput)
 
     //clean input bar
     $("#chat-input").val('');
+
+    if(!fileInput){
+      return false;
+    }
+
+      // Create a FormData object to hold the text and/or file data
+      var fileToUpload = new FormData();
+      fileToUpload.append('file', fileInput);
+      generate_message(PERSON_NAME, PERSON_IMG, 'user', 'Sending File: ' + fileInput.name);
+
+      uploadPdfFile(fileToUpload)
+      //generate_message(PERSON_NAME, PERSON_IMG, 'user', 'File uploaded: ' + fileInput.name);
+      $("#file-input").val('');
+
+    if(userInput.trim() == ''){
+      return false;
+    }
+    //clean input bar
+    $("#chat-input").val('');
+    
   })
   
   function generate_message(name, img, type, msgText) {
@@ -65,6 +86,29 @@ $(function() {
       console.log(data);
       const msgText = data;
       generate_message(BOT_NAME, BOT_IMG, "bot", msgText);
+    });
+  }
+  function uploadPdfFile(fileInput){
+    // Use $.ajax with the style of $.get
+    $.ajax({
+      url: '/upload',  // Your Flask route
+      type: 'POST',
+      data: fileInput,
+      processData: false,
+      contentType: false
+    })
+    .done(function(data) {
+      
+      console.log(data);
+
+      // Assuming 'data' contains the bot response
+      const msgText = "File uploaded successfully, now you can ask questions about your pdf file!";//data.response; // Adjust based on your server response structure
+      generate_message(BOT_NAME, BOT_IMG, "bot", msgText);
+    })
+    .fail(function(error) {
+      const msgText = "Failed to upload the file, try later!";//data.response; // Adjust based on your server response structure
+      generate_message(BOT_NAME, BOT_IMG, "bot", msgText);
+      console.log('Error:', error);
     });
   }
   

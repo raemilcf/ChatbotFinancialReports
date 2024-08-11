@@ -36,7 +36,7 @@
       </div>
       <nav class="navbar navbar-expand-md bg-inverse fixed-top scrolling-navbar">
         <div class="container">
-          <a href="index.html" class="navbar-brand"><img width="50" height="50" src="{{url_for('static', filename='img/logoHealth.png')}}" alt="">
+          <a href="index.html" class="navbar-brand"><img width="100" height="60" src="{{url_for('static', filename='img/logoScotia.png')}}" alt="">
            
           </a>   
 
@@ -50,7 +50,7 @@
                 <a class="nav-link page-scroll" href="#home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link page-scroll" href="#services">Mental Health</a>
+                <a class="nav-link page-scroll" href="#services">Financial Analysis</a>
               </li>  
                     
               <li class="nav-item">
@@ -64,16 +64,17 @@
         <div class="row space-100">
           <div class="col-lg-6 col-md-12 col-xs-12">
             <div class="contents">
-              <h2 class="head-title"> AI for Emotional Wellbeing</h2>
+              <h2 class="head-title"> AI for Financial Insights</h2>
               <p>
-                Mental health is a critical aspect of overall well-being, yet access to mental health support remains limited for many. Artificial intelligence and natural language processing have the potential to provide accessible and scalable mental health support. 
+                Financial insights is a vital component of overall financial analysis, yet many people struggle to access the support they need to manage their finances effectively. With the power of artificial intelligence and advanced data analysis, we can offer accessible and scalable financial support. 
+                This technology empowers individuals to make informed financial decisions, providing personalized guidance and insights to enhance their financial stability and growth.
                </p>
              
             </div>
           </div>
           <div class="col-lg-6 col-md-12 col-xs-12 p-0">
             <div class="intro-img">
-              <img src="{{url_for('static', filename='img/home.jpg')}}" alt="">
+              <img src="{{url_for('static', filename='img/HomeF2.jpg')}}" alt="">
             </div>            
           </div>
         </div> 
@@ -143,8 +144,9 @@
           <!-- Start Col -->
           <div class="col-lg-6 col-md-12 pl-4">
             <div class="business-item-info">
-              <h3>Mental Health Chatbot </h3>
-              <p>User-focused design for personalized help and crisis intervention, improving emotional well-being.</p>
+              <h3>Instant Financial Analysis and Translation Chatbot </h3>
+              <p>User-focused design, Unlock personalized financial insights tailored to your unique needs. 
+                Our chatbot is designed to provide expert guidance, helping you make informed decisions and achieve your financial goals with ease.</p>
 
               <!-- <a class="btn btn-common" href="#">download</a> -->
             </div>
@@ -167,8 +169,8 @@
               <div>   
                 <h2 class="section-title">Team Alpha</h2>
                 <div class="desc-text">
-                  <p>Meet our dedicated team of experts, passionately working behind the scenes to create an innovative mental health chatbot </p>  
-                  <p>designed to support and guide you on your journey to well-being.</p>
+                  <p>Meet our dedicated team of experts, passionately working behind the scenes to create an innovative financial insights chatbot </p>  
+                  <p>designed to support and guide you on your journey to financial analysis and translations.</p>
                 </div>
               </div> 
             </div>
@@ -344,7 +346,7 @@
 
 <div class="chat-box">
   <div class="chat-box-header">
-    Alice, your Mental Health Assistant 
+    Alice, your Personalized Financial Insights Assistant 
     <span class="chat-box-toggle"> <i class="lni-close"></i></span>
   </div>
   <div class="chat-box-body">
@@ -364,7 +366,7 @@
           </div>
 
           <div class="msg-text">
-            Hello, I'm Alice your mental health assistant, you can ask me anything related to mental health, or talk with me if you prefer. ☺️
+            Hello, I'm Alice your financial assistant, you can updload your quaterly financial PDF and ask me anything related to that report, or talk with me if you prefer. ☺️
           </div>
         </div>
       </div>
@@ -373,10 +375,11 @@
   <div class="chat-input">      
     <form class="msger-inputarea">
       <input type="text" id="chat-input" placeholder="Send a message..."/>
+      <input type="file" id="file-input" name="file" accept="application/pdf"/>
     <button type="submit" class="chat-submit" id="chat-submit">
       <i class="lni-enter"></i>
     </button>
-    </form>      
+    </form>     
   </div>
 </div>
 <!-- end chatbot -->
