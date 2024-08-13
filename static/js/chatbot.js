@@ -1,7 +1,7 @@
   // Icons made by Freepik from www.flaticon.com
   const BOT_IMG = "/static/img/chatbot/alice_profile_photo_ai.jpg"
   const PERSON_IMG ="/static/img/user_profile.jpeg"
-  const BOT_NAME = "Alice";
+  const BOT_NAME = "Financial Bot";
   const PERSON_NAME = "You";
 
 $(function() {
@@ -16,7 +16,7 @@ $(function() {
 
     if(userInput.trim() != ''){
       //add user message to ui 
-      generate_message(PERSON_NAME,PERSON_IMG, 'user' ,userInput );  
+      generate_message(PERSON_NAME,PERSON_IMG, 'user' ,userInput,'' );  
 
       //generate response from bot
       botResponse(userInput)
@@ -33,7 +33,7 @@ $(function() {
       // Create a FormData object to hold the text and/or file data
       var fileToUpload = new FormData();
       fileToUpload.append('file', fileInput);
-      generate_message(PERSON_NAME, PERSON_IMG, 'user', 'Sending File: ' + fileInput.name);
+      generate_message(PERSON_NAME, PERSON_IMG, 'user', 'Sending File: ' + fileInput.name,'');
 
       uploadPdfFile(fileToUpload)
       //generate_message(PERSON_NAME, PERSON_IMG, 'user', 'File uploaded: ' + fileInput.name);
@@ -47,16 +47,17 @@ $(function() {
     
   })
   
-  function generate_message(name, img, type, msgText) {
+  function generate_message(name, img, type, msgText, relevantTables) {
+    console.log('message',msgText)
     INDEX++;
     //construct message 
     var str="";
     str += '<div id="cm-msg-0" class="chat-msg '+type+'">'
     //depending on the user show immage in one side or the other 
-    str += '<div class="' + (type === "user" ? 'msg-avatar-user' : 'msg-avatar') + '">';
+    // str += '<div class="' + (type === "user" ? 'msg-avatar-user' : 'msg-avatar') + '">';
 
-    str +=(type === "user" ?'  <img style="float:right" src="' + img + '" />' :  '  <img src="' + img + '" />');
-    str += '</div>'
+    // str +=(type === "user" ?'  <img style="float:right" src="' + img + '" />' :  '  <img src="' + img + '" />');
+    // str += '</div>'
 
     str += '<div class="cm-msg-text">'
     str += '  <div class="msg-info">'
@@ -66,6 +67,7 @@ $(function() {
 
     str += '  <div class="msg-text">'
     str += msgText
+    str += '<div>' + relevantTables + '</div>'
     str += '  </div>'
     str += '</div>'
     str += '</div>'
@@ -84,8 +86,11 @@ $(function() {
     $.get("/get", { msg: rawText }).done(function (data) {
       console.log(rawText);
       console.log(data);
-      const msgText = data;
-      generate_message(BOT_NAME, BOT_IMG, "bot", msgText);
+
+      const result = data.result;
+      const relevantTables = data.relevant_Tables;
+      const msgText = result;
+      generate_message(BOT_NAME, BOT_IMG, "bot", msgText, relevantTables);
     });
   }
   function uploadPdfFile(fileInput){
@@ -103,11 +108,11 @@ $(function() {
 
       // Assuming 'data' contains the bot response
       const msgText = "File uploaded successfully, now you can ask questions about your pdf file!";//data.response; // Adjust based on your server response structure
-      generate_message(BOT_NAME, BOT_IMG, "bot", msgText);
+      generate_message(BOT_NAME, BOT_IMG, "bot", msgText, "");
     })
     .fail(function(error) {
       const msgText = "Failed to upload the file, try later!";//data.response; // Adjust based on your server response structure
-      generate_message(BOT_NAME, BOT_IMG, "bot", msgText);
+      generate_message(BOT_NAME, BOT_IMG, "bot", msgText,"");
       console.log('Error:', error);
     });
   }
@@ -129,57 +134,6 @@ $(function() {
     $(".chat-box").toggle('scale');
   })
  
-  
-// // chat bot original
-//   const msgerForm = get(".msger-inputarea");
-//   const msgerInput = get(".chat-input");
-//   const msgerChat = get(".chat-logs");
-
-
-
-//   msgerForm.addEventListener("submit", event => {
-//     event.preventDefault();
-
-//     const msgText = msgerInput.value;
-//     if (!msgText) return;
-
-//     appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
-//     msgerInput.value = "";
-//     botResponse(msgText);
-//   });
-
-//   function appendMessage(name, img, side, text) {
-//     //   Simple solution for small apps
-//     const msgHTML = `
-// <div class="msg ${side}-msg">
-// <div class="msg-img" style="background-image: url(${img})"></div>
-
-// <div class="msg-bubble">
-//   <div class="msg-info">
-//     <div class="msg-info-name">${name}</div>
-//     <div class="msg-info-time">${getCurrentTime()}</div>
-//   </div>
-
-//   <div class="msg-text">${text}</div>
-// </div>
-// </div>
-// `;
-
-//     msgerChat.insertAdjacentHTML("beforeend", msgHTML);
-//     msgerChat.scrollTop += 500;
-//   }
-
-  // function botResponse(rawText) {
-  //   // Bot Response
-  //   $.get("/get", { msg: rawText }).done(function (data) {
-  //     console.log(rawText);
-  //     console.log(data);
-  //     const msgText = data;
-  //     appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
-
-  //   });
-  // }
-
 
   // Utils
   function get(selector, root = document) {

@@ -1,8 +1,11 @@
 Flask
+pandas
+werkzeug
+torch
 numpy
-keras 
-tensorflow 
+fuzzywuzzy
+prettytable
 nltk 
-inflect
-autocorrect
+transformers
+sentence_transformers
 Gunicorn
