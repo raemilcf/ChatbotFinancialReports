@@ -1,0 +1,50 @@
+[
+    
+    {
+        "context": "In the Second Quarter of 2024, the net income was $2,092 million, earnings per share (diluted) was $1.57, and the return on equity was 11.2%. This is compared to $2,146 million in net income, $1.68 in earnings per share, and 12.2% in return on equity from the same period in 2023.",
+        "question": "What were the financial highlights for the Second Quarter of 2024 compared to Q2 2023?",
+        "answer": "The net income was $2,092 million compared to $2,146 million, earnings per share (diluted) was $1.57 compared to $1.68, and the return on equity was 11.2% compared to 12.2%."
+    },
+    {
+        "context": "For the Second Quarter of 2024, on an adjusted basis, the net income was $2,105 million, earnings per share (diluted) was $1.58, and the return on equity was 11.3%. This is compared to $2,161 million in net income, $1.69 in earnings per share, and 12.3% in return on equity from the same period in 2023.",
+        "question": "What were the adjusted financial highlights for the Second Quarter of 2024 compared to Q2 2023?",
+        "answer": "On an adjusted basis, the net income was $2,105 million compared to $2,161 million, earnings per share (diluted) was $1.58 compared to $1.69, and the return on equity was 11.3% compared to 12.3%."
+    },
+    {
+        "context": "For the second quarter, adjusted net income was $2,105 million. Adjusted diluted EPS was $1.58, down from $1.69 last year. Adjusted return on equity was 11.3%, compared to 12.3% a year ago.",
+        "question": "What were the adjusted financial metrics for the second quarter compared to the previous year?",
+        "answer": "The adjusted net income for the second quarter was $2,105 million. The adjusted diluted EPS was $1.58, down from $1.69 last year. The adjusted return on equity was 11.3%, compared to 12.3% a year ago."
+    },
+    {
+        "context": "Scott Thomson, President and CEO of Scotiabank, reported that the Bank delivered solid results this quarter despite ongoing macroeconomic uncertainty. The results were driven by revenue growth and expense discipline, with a focus on balanced growth, strong capital, and liquidity metrics. He also expressed pride in the global team’s support for the new strategy and their efforts in advancing key strategic initiatives.",
+        "question": "What did Scott Thomson, President and CEO of Scotiabank, say about the Bank’s performance this quarter?",
+        "answer": "Scott Thomson highlighted that the Bank achieved solid results this quarter amidst macroeconomic uncertainty. The positive results were due to revenue growth and expense discipline. He noted the Bank's commitment to balanced growth, with strong deposit momentum, and emphasized the importance of strong capital and liquidity metrics. Thomson also praised the global team’s support for the new strategy and their efforts in advancing key strategic initiatives."
+    },
+    {
+        "context": "In the latest quarter, Canadian Banking reported adjusted earnings of $1 billion. The positive operating leverage was achieved through solid revenue growth that exceeded expense growth. However, the provision for credit losses increased compared to the previous year. Deposit growth, which is a crucial aspect of the refreshed strategy, rose by 7% year-over-year.",
+        "question": "What were the financial results and key metrics for Canadian Banking this quarter?",
+        "answer": "Canadian Banking reported adjusted earnings of $1 billion for the quarter. Revenue growth exceeded expense growth, leading to positive operating leverage. The provision for credit losses increased compared to the previous year. Deposit growth, an important part of the refreshed strategy, was up 7% year-over-year."
+    },
+    {
+        "context": "International Banking reported adjusted earnings of $701 million. The revenue growth was supported by strong margin expansion and disciplined management of expenses and capital. However, this was offset by an increase in the provision for credit losses. The adjusted return on equity was 14.5%, representing a 120 basis point improvement compared to the previous year.",
+        "question": "What were the financial results and key metrics for International Banking this quarter?",
+        "answer": "International Banking generated adjusted earnings of $701 million. Revenue growth was driven by strong margin expansion and disciplined expense and capital management, though this was counterbalanced by higher provision for credit losses. The adjusted return on equity improved by 120 basis points to 14.5% compared to last year."
+    },
+    {
+        "context": "Global Wealth Management reported adjusted earnings of $389 million, reflecting an 8% increase compared to the previous year. Assets under management reached $349 billion, up by 6%. This growth contributed to strong revenue growth, although this was partly offset by investments aimed at supporting long-term business growth.",
+        "question": "What were the financial results and key metrics for Global Wealth Management this quarter?",
+        "answer": "Global Wealth Management achieved adjusted earnings of $389 million, an 8% increase year over year. Assets under management grew by 6% to $349 billion, which drove strong revenue growth. However, this growth was partly offset by investments made to support long-term business growth."
+    },
+    {
+        "context": "Global Banking and Markets reported earnings of $428 million, which represents a 7% increase from the previous year. The improved results were driven by higher fee-based revenue and a reduction in provision for credit losses.",
+        "question": "What were the earnings and key factors affecting Global Banking and Markets' performance this quarter?",
+        "answer": "Global Banking and Markets reported earnings of $428 million, a 7% increase compared to the prior year. The positive performance was supported by higher fee-based revenue and a lower provision for credit losses."
+    },
+    {
+        "context": "The Bank reported a Common Equity Tier 1 (CET1) capital ratio of 13.2%, an increase from 12.3% in the previous year.",
+        "question": "What was the Common Equity Tier 1 (CET1) capital ratio reported by the Bank, and how did it change compared to last year?",
+        "answer": "The Bank's Common Equity Tier 1 (CET1) capital ratio was 13.2%, up from 12.3% last year."
+    }
+    
+    
+]

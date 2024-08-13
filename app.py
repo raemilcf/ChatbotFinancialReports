@@ -27,6 +27,20 @@ model_Questions = pipeline("question-answering", model=model, tokenizer=tokenize
 #initialize embedings 
 embedder = SentenceTransformer('all-MiniLM-L6-v2')
 
+#initiazize translator 
+# Load models and tokenizers for both translation en to es and es to en directions
+#https://huggingface.co/Helsinki-NLP/opus-mt-es-en
+model_name_es_to_en = 'Helsinki-NLP/opus-mt-es-en'
+model_name_en_to_es = 'Helsinki-NLP/opus-mt-en-es'
+
+tokenizer_es_to_en = MarianTokenizer.from_pretrained(model_name_es_to_en)
+model_es_to_en = MarianMTModel.from_pretrained(model_name_es_to_en)
+
+tokenizer_en_to_es = MarianTokenizer.from_pretrained(model_name_en_to_es)
+model_en_to_es = MarianMTModel.from_pretrained(model_name_en_to_es)
+
+
+
 def load_global_data(pathFile):
     if 'financial_df' not in g or 'tablesList' not in g or 'document_embeddings' not in g or 'chunks_text' not in g:
         print('load data financial')
@@ -91,6 +105,13 @@ def retrieve_context(question, document_embeddings, documents, top_k=1):
 def get_response(question):
     financial_df, tablesList, document_embeddings, chunks_text = load_global_data('')
 
+     #translate question if necesary 
+    result, language = obtainTranslation(question)
+    #take question from translation 
+    question =result
+    print('Question after translation', question)
+
+
     # Retrieve relevant context base on the consine similarity
     context = retrieve_context(question, document_embeddings, chunks_text)
     
@@ -98,14 +119,60 @@ def get_response(question):
     # Answer the question using BertForQuestionAnswering
     result = model_Questions(question=question, context=" ".join(context))
 
+
+    print('\nEnglish Answer', result)
+    #translate output to language needed 
+    translatedResult, language = obtainTranslation(result, language)
+    print('\n Answer after translation ', translatedResult, language)
+
+
     #check data on tables 
     relevant_Tables= utils_finance.check_allTables_relevan_data(question, tablesList)
 
 
-    return result['answer'] , relevant_Tables
+    return translatedResult['answer'] , relevant_Tables
 
 
 
+#take text no matter the language, detect language and only if is spanish make the translation
+def translate_text(text, model, tokenizer):
+    #make translation to spanish
+     
+    # Tokenize the input text
+    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+    
+    # Perform the translation
+    with torch.no_grad():
+        translated = model.generate(**inputs)
+
+    # Decode the translated text
+    translated_text = tokenizer.decode(translated[0], skip_special_tokens=True)
+    return translated_text
+
+
+def obtainTranslation(text, target='en'):
+    # Detect language of the input text
+    language = detect(text)
+    isInput = target == 'es'
+    
+    # Determine if translation is needed
+    shouldTranslate = (language != target)
+    
+    # If the language matches the target or translation is not needed
+    if not shouldTranslate and language == target:
+        return text, language
+
+    # If translation is needed and input language is Spanish
+    if shouldTranslate and language == 'es':
+        result = translate_text(text, model_es_to_en, tokenizer_es_to_en)
+    elif shouldTranslate and language == 'en':
+        result = translate_text(text, model_en_to_es, tokenizer_en_to_es)
+    else:
+        result = 'We only support English and Spanish.'
+
+    return result, language
+
+    
 
 
 
