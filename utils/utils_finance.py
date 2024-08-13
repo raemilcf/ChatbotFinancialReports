@@ -95,6 +95,8 @@ def check_allTables_relevan_data(question, tablesList):
         if not data.empty:
             html_table = data.to_html(classes='table table-striped table-small', index=False)
             table_html_list.append(f"<p style='font-size:12px'>Relevant data from Table {i}:</h4>{html_table}")
+        # else:
+        #     return ''
 
     # Join all HTML content
     combined_html = "<br>".join(table_html_list)

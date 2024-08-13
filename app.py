@@ -9,7 +9,9 @@ from sentence_transformers import SentenceTransformer, util
 from transformers import pipeline
 from utils import utils_finance
 from flask import Flask, g, render_template, request,jsonify
-
+from transformers import MarianMTModel, MarianTokenizer
+from langdetect import detect
+import sentencepiece
 
 
 Gfinancial_df = pd.DataFrame()
@@ -83,6 +85,49 @@ def getData(filePath):
 
 
 
+#take text no matter the language, detect language and only if is spanish make the translation
+def translate_text(text, model, tokenizer):
+    #make translation to spanish
+     
+    # Tokenize the input text
+    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
+    
+    # Perform the translation
+    with torch.no_grad():
+        translated = model.generate(**inputs)
+
+    # Decode the translated text
+    translated_text = tokenizer.decode(translated[0], skip_special_tokens=True)
+    return translated_text
+
+
+def obtainTranslation(text, target='en'):
+    if  text == '':
+        return '', target
+    # Detect language of the input text
+    language = detect(text)
+    print(text)
+    isInput = target == 'es'
+    
+    # Determine if translation is needed
+    shouldTranslate = (language != target)
+    
+    # If the language matches the target or translation is not needed
+    if not shouldTranslate and language == target:
+        return text, language
+
+    # If translation is needed and input language is Spanish
+    if shouldTranslate and language == 'es':
+        result = translate_text(text, model_es_to_en, tokenizer_es_to_en)
+    elif shouldTranslate and language == 'en':
+        result = translate_text(text, model_en_to_es, tokenizer_en_to_es)
+    else:
+        result = 'We only support English and Spanish.'
+
+    return result, language
+
+    
+
 
 # cosine similarity of the embedings and return the best options 
 def retrieve_context(question, document_embeddings, documents, top_k=1):
@@ -109,7 +154,7 @@ def get_response(question):
     result, language = obtainTranslation(question)
     #take question from translation 
     question =result
-    print('Question after translation', question)
+    print('Question after translation', question,'Language=', language)
 
 
     # Retrieve relevant context base on the consine similarity
@@ -120,59 +165,19 @@ def get_response(question):
     result = model_Questions(question=question, context=" ".join(context))
 
 
-    print('\nEnglish Answer', result)
+    print('\nEnglish Answer', result['answer'] ,'Language=', language)
     #translate output to language needed 
-    translatedResult, language = obtainTranslation(result, language)
+    translatedResult, language = obtainTranslation(result['answer'], language)
     print('\n Answer after translation ', translatedResult, language)
 
 
     #check data on tables 
-    relevant_Tables= utils_finance.check_allTables_relevan_data(question, tablesList)
+    relevant_Tables= utils_finance.check_allTables_relevan_data(result['answer'], tablesList)
 
 
-    return translatedResult['answer'] , relevant_Tables
+    return translatedResult , relevant_Tables
 
 
-
-#take text no matter the language, detect language and only if is spanish make the translation
-def translate_text(text, model, tokenizer):
-    #make translation to spanish
-     
-    # Tokenize the input text
-    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
-    
-    # Perform the translation
-    with torch.no_grad():
-        translated = model.generate(**inputs)
-
-    # Decode the translated text
-    translated_text = tokenizer.decode(translated[0], skip_special_tokens=True)
-    return translated_text
-
-
-def obtainTranslation(text, target='en'):
-    # Detect language of the input text
-    language = detect(text)
-    isInput = target == 'es'
-    
-    # Determine if translation is needed
-    shouldTranslate = (language != target)
-    
-    # If the language matches the target or translation is not needed
-    if not shouldTranslate and language == target:
-        return text, language
-
-    # If translation is needed and input language is Spanish
-    if shouldTranslate and language == 'es':
-        result = translate_text(text, model_es_to_en, tokenizer_es_to_en)
-    elif shouldTranslate and language == 'en':
-        result = translate_text(text, model_en_to_es, tokenizer_en_to_es)
-    else:
-        result = 'We only support English and Spanish.'
-
-    return result, language
-
-    
 
 
 

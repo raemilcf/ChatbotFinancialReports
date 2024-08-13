@@ -8,4 +8,7 @@ prettytable
 nltk 
 transformers
 sentence_transformers
+langdetect 
+langid 
+sentencepiece
 Gunicorn
