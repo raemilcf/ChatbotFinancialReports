@@ -1,4 +1,3 @@
-Flask
 pandas
 werkzeug
 torch
@@ -11,4 +10,5 @@ sentence_transformers
 langdetect 
 langid 
 sentencepiece
-Gunicorn
+Flask==3.0.3
+gunicorn

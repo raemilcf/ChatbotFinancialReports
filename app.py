@@ -164,16 +164,19 @@ def get_response(question):
     # Answer the question using BertForQuestionAnswering
     result = model_Questions(question=question, context=" ".join(context))
 
-
-    print('\nEnglish Answer', result['answer'] ,'Language=', language)
-    #translate output to language needed 
-    translatedResult, language = obtainTranslation(result['answer'], language)
-    print('\n Answer after translation ', translatedResult, language)
-
-
+   
     #check data on tables 
-    relevant_Tables= utils_finance.check_allTables_relevan_data(result['answer'], tablesList)
+    relevant_Tables= utils_finance.check_allTables_relevan_data(question, tablesList)
 
+    translatedResult =result['answer']
+    print('\nEnglish Answer', translatedResult,'Language=', language)
+
+
+    if language == 'es':
+
+        #translate output to language needed 
+        translatedResult, language = obtainTranslation(result['answer'], language)
+        print('\n Answer after translation ', translatedResult, language)
 
     return translatedResult , relevant_Tables
 
@@ -227,5 +230,5 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=4900)
+    app.run(host='0.0.0.0', port=4700)
     app.run()
