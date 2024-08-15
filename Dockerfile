@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.12.4
+FROM python:3.12
 
 WORKDIR /chatbotfinancial
 
@@ -8,9 +8,8 @@ COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 COPY . .
-EXPOSE 4900
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
-
+EXPOSE 5000
+CMD ["flask", "run", "--host=0.0.0.0"]
 #run docker cmd to create app in docker 
 # docker build -t app .
 #run app in specified port 
